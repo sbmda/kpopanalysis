@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>K-pop Analysis</title>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/scrollreveal.js/3.3.1/scrollreveal.min.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+      <link rel="stylesheet" crossorigin href="/assets/index-rDXnySkl.css">
+    </head>
+    <body>
+        <main>
+            <div class="scroll scrolly"></div>
+            <div class="tweet-section">
+                <div class="tweet-wrap">
+                    <div class="tweet-header">
+                       <img src="https://pbs.twimg.com/profile_images/1854546365432344612/49ZJgFXo_400x400.jpg" alt="" class="avator">
+                       <div class="tweet-header-info">
+                          z~ | maya read my sign ‼️💕 <span>@Sdongiesutopia</span><span> Dec 13
+                          </span>
+                          <p>am i the only one disappointed with how short kpop songs are getting recently?.. like where’s the bridge? why is half the song the chorus?</p>
+                       </div>
+                    </div>
+                    <div class="tweet-info-counts">
+                       <div class="comments">
+                          <svg class="feather feather-message-circle sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                          </svg>
+                          <div class="comment-count"></div>
+                       </div>
+                       <div class="retweets">
+                          <svg class="feather feather-repeat sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                             <polyline points="17 1 21 5 17 9"></polyline>
+                             <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                             <polyline points="7 23 3 19 7 15"></polyline>
+                             <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+                          </svg>
+                          <div class="retweet-count"></div>
+                       </div>
+                       <div class="likes">
+                          <svg class="feather feather-heart sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                          </svg>
+                          <div class="likes-count">
+                          </div>
+                       </div>
+                       <div class="message">
+                          <svg class="feather feather-send sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                             <line x1="22" y1="2" x2="11" y2="13"></line>
+                             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                          </svg>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="tweet-wrap">
+                    <div class="tweet-header">
+                       <img src="https://pbs.twimg.com/profile_images/1863462284367994880/ItuzDn-k_400x400.jpg" alt="" class="avator">
+                       <div class="tweet-header-info">
+                          ✶ faith 💜 ⁷ saw dnp & rose 🥺 <span>@jetenime</span><span> Nov 15
+                          </span>
+                          <p>the trend of kpop songs being short/not having bridges needs to stop I’m sick of it 😭</p>
+                       </div>
+                    </div>
+                    <div class="tweet-info-counts">
+                       <div class="comments">
+                          <svg class="feather feather-message-circle sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                          </svg>
+                          <div class="comment-count"></div>
+                       </div>
+                       <div class="retweets">
+                          <svg class="feather feather-repeat sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                             <polyline points="17 1 21 5 17 9"></polyline>
+                             <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                             <polyline points="7 23 3 19 7 15"></polyline>
+                             <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+                          </svg>
+                          <div class="retweet-count"></div>
+                       </div>
+                       <div class="likes">
+                          <svg class="feather feather-heart sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                          </svg>
+                          <div class="likes-count">
+                          </div>
+                       </div>
+                       <div class="message">
+                          <svg class="feather feather-send sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                             <line x1="22" y1="2" x2="11" y2="13"></line>
+                             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                          </svg>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="tweet-wrap">
+                    <div class="tweet-header">
+                       <img src="https://pbs.twimg.com/profile_images/1861476040087891968/VcbubAbo_400x400.jpg" alt="" class="avator">
+                       <div class="tweet-header-info">
+                          Tessa 🐠 <span>@tessa_kws</span><span> Nov 4
+                          </span>
+                          <p>short songs are ruining kpop. I'm sorry but what do you mean no bridge and not even close to being 3 minutes...</p>
+                       </div>
+                    </div>
+                    <div class="tweet-info-counts">
+                       <div class="comments">
+                          <svg class="feather feather-message-circle sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                          </svg>
+                          <div class="comment-count"></div>
+                       </div>
+                       <div class="retweets">
+                          <svg class="feather feather-repeat sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                             <polyline points="17 1 21 5 17 9"></polyline>
+                             <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                             <polyline points="7 23 3 19 7 15"></polyline>
+                             <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+                          </svg>
+                          <div class="retweet-count"></div>
+                       </div>
+                       <div class="likes">
+                          <svg class="feather feather-heart sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                          </svg>
+                          <div class="likes-count">
+                          </div>
+                       </div>
+                       <div class="message">
+                          <svg class="feather feather-send sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                             <line x1="22" y1="2" x2="11" y2="13"></line>
+                             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                          </svg>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="tweet-wrap">
+                    <div class="tweet-header">
+                       <img src="https://pbs.twimg.com/profile_images/1864162467460325376/QdK3wbS4_400x400.jpg" alt="" class="avator">
+                       <div class="tweet-header-info">
+                          luka <span>@strawbwrryz</span><span> May 15
+                          </span>
+                          <p>kpop songs these days are so short.. i miss the longer ones ! bring back 3-4 minute songs</p>
+                       </div>
+                    </div>
+                    <div class="tweet-info-counts">
+                       <div class="comments">
+                          <svg class="feather feather-message-circle sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                          </svg>
+                          <div class="comment-count"></div>
+                       </div>
+                       <div class="retweets">
+                          <svg class="feather feather-repeat sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                             <polyline points="17 1 21 5 17 9"></polyline>
+                             <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                             <polyline points="7 23 3 19 7 15"></polyline>
+                             <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+                          </svg>
+                          <div class="retweet-count"></div>
+                       </div>
+                       <div class="likes">
+                          <svg class="feather feather-heart sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                          </svg>
+                          <div class="likes-count">
+                          </div>
+                       </div>
+                       <div class="message">
+                          <svg class="feather feather-send sc-dnqmqq jxshSx" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                             <line x1="22" y1="2" x2="11" y2="13"></line>
+                             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                          </svg>
+                       </div>
+                    </div>
+                 </div>
+            </div>
+            <div class="title-section" id="titleSection">
+                <h1>The Rise and Fall of the Average K-Pop Song</h1>
+                <h2 class="subtitle">Just how shorter have K-Pop tracks gotten in the past decade? </h2>
+            </div>
+            <div class="byline">
+                <p class="date">December 28th, 2024</p>
+            </div>   
+            <div class="main-content">
+                <div class="text-section">
+                    <p style="margin-top: 80px;">I have only just gotten into Stray Kids.</p>
+                    <p>I’ve been listening to their music, on and off, ever since the group came out with <em>God’s Menu</em> back in 2020, but it took me until this fall to dive fully into their discography. The turning point was <em>Chk Chk Boom</em>; it was catchy, it fit right within my taste, and before I knew it I found myself replaying it multiple times a day.</p>
+                    <p>However, it didn’t take me more than a few listens to realize that, as catchy as the song was… it was incredibly short. At 2 minutes and 28 seconds, despite being the title track, it is the shortest track on <em>ATE</em>, the album it appears on. The second place goes to <em>I Like It</em>, another song heavily promoted after its release—it’s only a second shorter than <em>Chk Chk Boom</em>. On Stray Kids’ latest release, <em>HOP</em>, only two tracks go beyond the three-minute mark.</p>
+                    <div class="parent scroll">
+                        <img class="image1" src="/assets/skz-DpURNLpO.png" />
+                        <img class="image2" src="/assets/frame-CRUFSBjH.gif" />
+                    </div>  
+                    <p>The question kept gnawing at me—<em>where are the long songs?</em> Think of the four-minute grandiose tracks that were common currency among second generation groups, like Girls’ Generation’s <em>I Got a Boy</em>, at 4 minutes and 31 seconds, or TVXQ’s <em>Catch Me</em>, that was even longer at 4 minutes and 39 seconds. Even among third generation groups, songs below the three-minute mark were incredibly rare, to my memory.</p>
+                    <p>Nowadays (and it isn’t just an issue with Stray Kids), it seems as though three minutes isn’t even considered a standard in song length anymore. How has it changed over time? In order to answer this question, I’ve set out to analyze over 9000 K-Pop songs released between 2007 and 2024 and their duration, using <a href="https://musicbrainz.org/" target="_blank">MusicBrainz</a>'s database, an online collaborative music database.</p>
+                </div>
+                <div class="chart-section" id="scatter-plot"></div>
+                <div id="overallAnalysis">
+                    <div class="section-box first" id="overallFirst">
+                    <div class="text-box">
+                        <p>Let’s first look at the overall trends. Each dot on this scatter plot represents a song in the dataset.</p>
+                    </div></div>
+                    <div class="section-box">
+                        <div id="overall2007"></div>
+                    <div class="text-box">
+                        <p>In 2007, the <span style="color: #527dd9; font-weight: 600;">average</span> song duration was <strong>3 minutes and 50 seconds</strong>, so just under 4 minutes. Wonder Girls had just debuted, and released a hit that would be trending again nearly 17 years later: <em>Tell&nbsp;Me</em>. BIGBANG were still considered rookies. Girls’ Generation had taken South Korea by storm with <em>Into&nbsp;the&nbsp;New&nbsp;World</em>.</p>
+                    </div></div>
+                    <div class="section-box">
+                        <div id="overallCurve"></div>
+                    <div class="text-box">
+                        <p>In 2024, that number has gone down to <strong>3 minutes and 4 seconds</strong>, which represents a 20.3% decrease since 2007. Among others, charts were dominated by aespa’s <em>Supernova</em>, which won Song of the Year at this year’s MAMA Awards in November, and ILLIT’s <em>Magnetic</em> (you-you-you-you).</p>
+                    </div></div>
+                    <div class="section-box">
+                    <div class="text-box" id="intro2014">
+                        <p>I personally started listening to K-Pop in late 2015. In order to take a look at how the music I listen to has evolved since that period, I’ve also extracted some trends between 2014 and 2024. That’s when most of the music I listen to came out.</p>
+                    </div></div>
+                    <div class="section-box">
+                        <div id="overall2014"></div>
+                    <div class="text-box">
+                        <p>The average song length that year was <strong>3 minutes and 36 seconds</strong>; average song duration has suffered a 15% decrease since then. Interestingly enough, 2014 is the last year analyzed that had seen an increase in song duration from the previous year; all following years have seen a decrease since. </p>
+                    </div></div>
+                    <div class="section-box">
+                        <div class="text-box">
+                            <p>If you want to explore the data a little, hover over each dot; you'll be able to see the song's title and group.</p>
+                        </div></div>
+                </div>
+                <div id="next">
+                </div>
+                <div class="chart-section first" id="percent-curve" style="padding-top: 100px;"></div>
+                <div id="percentAnalysis">
+                    <div class="section-box first">
+                        <div id="percent_intro"></div>
+                        <div class="text-box">
+                        <p>The portion of songs below the three-minute mark has absolutely exploded since 2020, around the same time TikTok rose in popularity (more on that later).<p>
+                        </div>
+                    </div>
+                    <div class="section-box">
+                        <div id="percent_first"></div>
+                        <div class="text-box">
+                        <p>While the portion of songs analyzed on a given year that fell under three minutes had not gone over 10% since 2010...</p>
+                        </div>
+                    </div>
+                    <div class="section-box">
+                        <div id="percent_2020"></div>
+                        <div class="text-box">
+                        <p>...it rose slightly again in 2020, at <strong>10.5%</strong>...</p>
+                        </div>
+                    </div>
+                    <div class="section-box">
+                        <div id="percent_2022"></div>
+                        <div class="text-box">
+                        <p>...nearly doubled by 2022 at about <strong>21.6%</strong>...</p>
+                        </div>
+                    </div>
+                    <div class="section-box">
+                        <div id="percent_2024"></div>
+                        <div class="text-box">
+                        <p>...and again this year, reaching an impressive <strong>41.5%</strong>. </p>
+                        </div>
+                    </div>
+                </div>
+                <div id="next2">
+                </div>
+                <div class="parent scroll">
+                    <img class="image1" src="/assets/wish-CkWO766m.png" />
+                    <img class="image2" src="/assets/frame-CRUFSBjH.gif" />
+                </div>  
+                <div class="text-section">
+                    <h2>Artist Highlights</h2>
+                    <p>When looking at the entire dataset, some interesting things come up: <strong>ILLIT</strong>, who debuted this year, were found to be the group with the shortest average song duration in the dataset, at about 152 seconds, or <strong>2 minutes and 32 seconds</strong>. On the other end of the spectrum, <strong>TVXQ</strong> has the longest songs, at about <strong>3 minutes and 52 seconds</strong> on average. They are also the oldest group included in the dataset, and the only one whose career spans beyond our years of interest.</p>
+                    <p>For this following part, choose an artist among the 96 available in the dataset to personalize your reading experience.</p>
+                    <div class="selector" id="group-pick">
+                        <select id="group-select" name="group">
+                            <option disabled selected>Choose...</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="interactive_highlights">
+                    <div id="group-highlights">
+                        <div id="scrollGroup"></div>
+                        <div class="text-section">
+                            <p>In the case of <strong><span class="group-name"></span></strong>, their average song duration is <span id="total_avg"></span> seconds, or <strong><span id="avg_minutes"></span> minutes and <span id="avg_seconds"></span> seconds</strong>. Compared to the rest of the dataset, <strong><span class="group-name"></span></strong>’s average song length is <span id="length_indicator"></span> the norm. The average song in the dataset is about <span id="overallMin"></span> minutes and <span id="overallSec"></span> seconds long.</p>
+                            <p id="debut_comparison">Since their debut in <span id="debut_year"></span>, their average song length went from <strong><span id="debut_minutes"></span> minutes and <span id="debut_seconds"></span> seconds</strong> during their debut era to <strong><span id="today_minutes"></span> minutes and <span id="today_seconds"></span> seconds</strong> in <span id="today"></span>. <span id="change_sentence">That is a <span id="change_indicator"></span> of <strong><span id="diff_seconds"></span> second<span id="plural-seconds">s</span></strong>, or about <span id="change_percent"></span>%. </span></p>
+                        </div>
+                    </div>
+                    <div id="sameagency-highlights">
+                        <div class="text-section">
+                            <p><strong><span class="group-name"></span></strong> is part of <strong><span class="agency-name"></span></strong>, one of the so-called “Big Four” entertainment companies in South Korea. SM Entertainment, JYP Entertainment and YG Entertainment long dominated the industry as the “Big Three”, before HYBE (previously BigHit Entertainment) took over the market, riding on BTS’s gigantic worldwide success. Their important number of artists and songs, as well as their overall market success, makes the same kind of analysis possible within the same agency; so how does <strong><span class="group-name"></span></strong> compare to other artists in <strong><span class="agency-name"></span></strong>?</p>
+                            <p>The average song duration at <strong><span class="agency-name"></span></strong> is of <strong><span id="agency_minutes"></span> minutes and <span id="agency_seconds"></span> seconds</strong>. That makes <strong><span class="group-name"></span></strong>’s tracks generally <span id="group_indicator"></span> the rest of its agency’s songs. This year, songs by <strong><span class="agency-name"></span></strong> artists were about <strong><span id="minutes_2024"></span> minutes and <span id="seconds_2024"></span> seconds</strong> long. <span id="sentence_2007">Between 2007 and 2024, <strong><span class="agency-name"></span></strong> saw a change of <span id="diff_2007"></span> seconds in song duration; average song length in 2007 was <strong><span id="minutes_2007"></span> minutes and <span id="seconds_2007"></span> seconds</strong>. </span>In 2014, songs were on average about <strong><span id="minutes_2014"></span> minutes and <span id="seconds_2014"></span> seconds</strong>, so a difference of about <span id="diff_2014"></span> seconds compared to 2024.</p>
+                            <p>At 2 minutes and 52 seconds, <strong>HYBE</strong> has the shortest average song duration in 2024 amongst the Big Four companies; <strong>SM Entertainment</strong> has the longest, at 3 minutes and 10 seconds. </p>
+                        </div>
+                        <div class="selector">
+                            <button class="resume-group">Choose another group</button>
+                        </div>
+                    </div>
+                    <div class="text-section" id="agency-info">
+                        <p>How do these trends manifest within a single entertainment company? Let’s take a look at one of the so-called “Big Four” entertainment companies in South Korea. SM Entertainment, JYP Entertainment and YG Entertainment long dominated the industry as the “Big Three”, before HYBE (previously BigHit Entertainment) took over the market, riding on BTS’s gigantic worldwide success. Their important number of artists and songs, as well as their overall market success, makes the same kind of analysis possible within the same agency.</p>
+                        <p>To continue, pick an agency among the Big Four. </p>
+                        <div class="selector" id="agency-pick">
+                            <select id="agency-select" name="group">
+                                <option disabled selected>Choose...</option>
+                                <option value="sm">SM Entertainment</option>
+                                <option value="jyp">JYP Entertainment</option>
+                                <option value="yg">YG Entertainment</option>
+                                <option value="hybe">HYBE</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="agency-highlights">
+                        <div id="scrollAgency"></div>
+                        <div class="text-section">
+                            <p>The average song duration at <strong><span class="agency-name"></span></strong> is of <strong><span id="agcy_minutes"></span> minutes and <span id="agcy_seconds"></span> seconds</strong>. This year, songs by <strong><span class="agency-name"></span></strong> artists were about <strong><span id="mnts_2024"></span> minutes and <span id="scds_2024"></span> seconds</strong> long. <span id="stnc_2007">Between 2007 and 2024, <strong><span class="agency-name"></span></strong> saw a change of <span id="diff2007"></span> seconds in song duration; average song length in 2007 was <strong><span id="mnts_2007"></span> minutes and <span id="scds_2007"></span> seconds</strong>. </span>In 2014, songs were on average about <strong><span id="mnts_2014"></span> minutes and <span id="scds_2014"></span> seconds</strong>, so a difference of about <span id="diff2014"></span> seconds compared to 2024.</p>
+                            <p>At 2 minutes and 52 seconds, <strong>HYBE</strong> has the shortest average song duration in 2024 amongst the Big Four companies; <strong>SM Entertainment</strong> has the longest, at 3 minutes and 10 seconds. </p>
+                        </div>
+                        <div class="selector">
+                            <button class="resume-group">Choose another group</button>
+                        </div>
+                    </div> 
+                </div>
+                <div id="outro_trigger"></div>
+                <div class="text-section" id="outro" style="padding-top: 20px;">
+                    <p>Songs getting shorter and shorter with time isn’t rare in mainstream music. Analyses like these have been done in a plethora of genres; my own inspiration for this piece came from <a href="https://www.rapminerz.io/articles/jusquou-les-morceaux-vont-ils-retrecir" target="_blank">RapMinerz’s analysis of French rap</a>, which found the same trend in song duration, but also <a href="https://www.youtube.com/watch?v=quFdTImUloc&ab_channel=RapMinerz%F0%9F%94%A5%E2%9B%8F%EF%B8%8F" target="_blank">significant change in song structure</a>. <em>The Washington Post</em> also did <a href="https://www.washingtonpost.com/entertainment/interactive/2024/shorter-songs-again/" target="_blank">a similar analysis across mainstream music</a>, which did include a mention of New Jeans. Commentary on the same phenomenon also floods the Internet, such as <a href="https://www.youtube.com/watch?v=kMUbuQWzI-c&ab_channel=everglow-up" target="_blank">this (really interesting) video</a> on this very same trend in K-Pop.</p>
+                    <p>Technological changes in the industry are often pointed to as the main culprit, especially the rise of streaming platforms like Spotify and Apple Music in the early 2010s. A two-minute song on a streaming platform will be played more often in the span of an hour than a four-minute one—and thus, will likely generate more revenue at the end of the line. Since plays are counted only starting at the 30-second mark, artists tend not to waste time on an elaborate intro anymore—it's more profitable, after all, to get to the hook as quickly as one can before you skip the song, which can also lead to a shorter song overall.</p>
+                    <p>Something that came out in both <em>The Washington Post</em>’s and RapMinerz’s analyses was the absence of the bridge—or, in French rap, “<em>la mort du troisième couplet</em>”, or the death of the third verse, a once fundamental part of the structure of a classic hip-hop track. Like many others, I’ve noticed the same trend in K-Pop; while the bridge has long been a treasured and iconic part in song structure in the industry, often allowing for vocal prowess from main singers to elaborate dance breaks, it is less and less rare to see them completely gone from title tracks. </p>
+                    <div id="player02"  class="player horizontal chart-section">
+                        <div class="wrapper">
+                           <div class="info-wrapper" id="infowrapper">
+                              <div class="info">
+                                 <h3 id="tracktitle">Chk Chk Boom</h3>
+                                 <p style="font-size: medium;" id="trackartist">Stray Kids</p>
+                              </div>
+                           </div>
+                           <div class="track-time">
+                            <div id="track"></div>
+                            <div class="time" id="timetime">
+                               <div class="total-time">00:00</div>
+                               <div class="last-time" id="lasttime">02:28</div>
+                            </div>
+                         </div>
+                           <div class="controls">
+                              <div class="prev">
+                                 <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2.33917 13.7397L12.9664 7.38149C13.2293 7.22152 13.5303 7.13509 13.8381 7.13123C14.1458 7.12737 14.4489 7.20622 14.7157 7.35955C15.0053 7.52815 15.245 7.77036 15.4107 8.0616C15.5763 8.35284 15.6619 8.68272 15.6588 9.01775V13.4657L25.8274 7.3798C26.0903 7.21983 26.3914 7.13341 26.6991 7.12955C27.0068 7.12568 27.3099 7.20454 27.5768 7.35786C27.8663 7.52646 28.1061 7.76867 28.2717 8.05991C28.4373 8.35115 28.5229 8.68103 28.5198 9.01606V21.4512C28.5231 21.7863 28.4376 22.1163 28.2719 22.4077C28.1063 22.699 27.8664 22.9413 27.5768 23.1099C27.3099 23.2632 27.0068 23.3421 26.6991 23.3382C26.3914 23.3344 26.0903 23.2479 25.8274 23.088L15.6588 16.9993V21.4489C15.6625 21.7844 15.5771 22.1149 15.4114 22.4067C15.2458 22.6985 15.0057 22.9411 14.7157 23.1099C14.4489 23.2632 14.1458 23.3421 13.8381 23.3382C13.5303 23.3344 13.2293 23.2479 12.9664 23.088L2.33917 16.7298C2.08653 16.5715 1.87825 16.3516 1.73386 16.0908C1.58948 15.83 1.51373 15.5368 1.51373 15.2387C1.51373 14.9406 1.58948 14.6473 1.73386 14.3865C1.87825 14.1257 2.08653 13.9058 2.33917 13.7476V13.7397Z" fill="rgba(0, 0, 0, 0.20)"/>
+                                 </svg>
+                              </div>
+                              <div class="play">
+                                 <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8.32137 25.586C7.9759 25.5853 7.63655 25.4948 7.33669 25.3232C6.66148 24.9406 6.24173 24.1978 6.24173 23.3915V7.07398C6.24173 6.26542 6.66148 5.52494 7.33669 5.14232C7.64369 4.96589 7.99244 4.87516 8.3465 4.87961C8.70056 4.88407 9.04692 4.98354 9.34938 5.16764L23.2952 13.5155C23.5859 13.6977 23.8255 13.9508 23.9916 14.251C24.1577 14.5511 24.2448 14.8886 24.2448 15.2316C24.2448 15.5747 24.1577 15.9121 23.9916 16.2123C23.8255 16.5125 23.5859 16.7655 23.2952 16.9478L9.34713 25.2979C9.0376 25.485 8.68307 25.5846 8.32137 25.586V25.586Z" fill="rgba(0, 0, 0, 0.20)"/>
+                                 </svg>
+                              </div>
+                              <div class="next">
+                                 <svg width="29" height="30" viewBox="0 0 29 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_42_51)">
+                                       <path d="M27.1426 13.7397L16.5154 7.38149C16.2525 7.22152 15.9514 7.13509 15.6437 7.13123C15.336 7.12737 15.0329 7.20622 14.766 7.35955C14.4765 7.52815 14.2368 7.77036 14.0711 8.0616C13.9055 8.35284 13.8199 8.68272 13.823 9.01775V13.4657L3.65435 7.3798C3.39144 7.21983 3.0904 7.13341 2.78268 7.12955C2.47495 7.12568 2.17183 7.20454 1.905 7.35786C1.61547 7.52646 1.37571 7.76867 1.21008 8.05991C1.04445 8.35115 0.958845 8.68103 0.961955 9.01606V21.4512C0.958745 21.7863 1.0443 22.1163 1.20994 22.4076C1.37558 22.699 1.61538 22.9413 1.905 23.1099C2.17183 23.2632 2.47495 23.3421 2.78268 23.3382C3.0904 23.3344 3.39144 23.2479 3.65435 23.088L13.823 16.9993V21.4489C13.8194 21.7844 13.9048 22.1149 14.0704 22.4066C14.2361 22.6984 14.4761 22.9411 14.766 23.1099C15.0329 23.2632 15.336 23.3421 15.6437 23.3382C15.9514 23.3344 16.2525 23.2479 16.5154 23.088L27.1426 16.7298C27.3953 16.5715 27.6035 16.3516 27.7479 16.0908C27.8923 15.83 27.968 15.5368 27.968 15.2387C27.968 14.9406 27.8923 14.6473 27.7479 14.3865C27.6035 14.1257 27.3953 13.9058 27.1426 13.7476V13.7397Z" fill="rgba(0, 0, 0, 0.20)"/>
+                                    </g>
+                                    <defs>
+                                       <clipPath id="clip0_42_51">
+                                          <rect width="28.8089" height="28.8089" fill="white" transform="translate(0.0612183 0.828369)"/>
+                                       </clipPath>
+                                    </defs>
+                                 </svg>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                    <div id="song-section">
+                        <div class="section-box first">
+                            <div class="text-box">
+                                <p>Let’s go back to Stray Kids’ <strong><em>Chk Chk Boom</em></strong>, for example. At 2 minutes and 28 seconds, the song doesn’t allow for any bridge after two <span style="color: #66c2a5; font-weight: 600;">verses</span>, and two repetitions of the <span style="color: #fc8d62; font-weight: 600;">pre-chorus</span> and the <span style="color: #8da0cb; font-weight: 600;">chorus</span>.</p>
+                            </div>
+                        </div>
+                        <div class="section-box">
+                            <div id="chkchkboom"></div>
+                            <div class="text-box">
+                                <p>Only a slightly different iteration of the chorus serves as the <span style="color: #e78ac3; font-weight: 600;">outro</span>, which is performed on stage with a variation of the choreography for that part.</p>
+                            </div>
+                        </div>
+                        <div class="section-box">
+                            <div id="supershy"></div>
+                            <div class="text-box">
+                                 <p>The same thing happens in New Jeans’ hit <strong><em>Super Shy</em></strong>; rather than a bridge, the song peters off into a rendition of the <span style="color: #fc8d62; font-weight: 600;">pre-chorus</span> that serves as an <span style="color: #e78ac3; font-weight: 600;">outro</span>. The song, in total, is only 2 minutes and 35 seconds, after all.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="end-track"></div>
+                    <div class="parent scroll">
+                        <img class="image1" src="/assets/atz-j403Fq_1.png" />
+                        <img class="image2" src="/assets/frame-CRUFSBjH.gif" />
+                    </div>
+                    <p>It is too soon to call for the “death of the bridge” I believe, like it might’ve happened in hip-hop with the disappearance of the third verse. But as we see the rise of this trend, alongside short-content platforms, like TikTok, which bet on virality and dance challenges for success over song quality or length, I also don’t think it’s a negligible observation. </p>
+                    <p>TikTok definitely also adds another layer to this whole phenomenon: our attention spans are now shorter than ever, and it might not be with an elaborate five-minute track that an artist will be able to achieve success on a platform filled with six-second long videos. The strong rise in songs that don’t even last three minutes in the 2020s is a direct consequence of that.</p>
+                    <p>But just like RapMinerz take the time to highlight, shorter songs do not necessarily rhyme with bad songs. I did get into this whole analysis simply because a song I really liked also happened to be a short one. While creativity might not count among the top priorities of entertainment companies and conglomerates, I also find it difficult to believe that the entirety of music can continue to be pumped out in two-minute long tracks, nor that all of those are completely devoid of value and originality.</p>
+                    <p>Art finds ways to reinvent itself, to push boundaries, to fight back against restrictions and constraints. And while one might argue that K-Pop is only a byproduct of capitalist conglomerates investing in entertainment, it cannot be completely detached from the art form—and everything it implies—that it is part of. Who’s to say that no one will explore and experiment with structure and length in the months or years to come? </p>
+                    <p>Guess we’ll have to stick around to find out.</p>
+                    <div class="parent scroll">
+                        <img class="image1" src="/assets/day6-Cr-A2GsX.png" />
+                        <img class="image2" src="/assets/frame-CRUFSBjH.gif" />
+                    </div>
+                </div>
+                <div class="text-section" id="#methodology">
+                    <h4 class="accordion">Methodology
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16" style="text-align: center; margin-left: 5px; transform: translateY(3px)">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                          </svg>
+                    </h4>
+                        <div class="panel">
+                            <p id="metho1">Using MusicBrainz’ API, I was able to build a (rather conservative) dataset of over 9600 K-Pop songs, released between 2004 and 2024. However, the only group whose discography spans beyond those twenty years is TVXQ; in order to keep the analysis as representative as possible of the industry, the cutoff for it was set to 2007. By then, SM Entertainment had already debuted Super Junior and Girls’ Generation, YG Entertainment had launched BIGBANG into the world, and Wonder Girls had also made their debut under JYP, to name a few. </p>
+                            <p>In order not to overwhelm my laptop (rip) or MusicBrainz’ database, I set out to keep my API calls as concise as possible, and limited my artist pool to just under a 100. Only groups were considered in this analysis; no soloists were included. This dataset includes all active groups of the “Big Four” (SM, JYP, YG, and HYBE), as well as active groups and a few inactive ones ranging from midsize companies (i.e. CUBE, FNC, Starship…) to smaller agencies with powerhouse groups (i.e. KQ’s ATEEZ). Data fetched for each song included the artist name, the album name, the track’s title, its release date, and its duration in seconds. Only digital releases were considered in the analysis; and even among those, some might still be missing from the dataset for a variety of reasons (absence from MusicBrainz’ own database, issue with API request or output treatment, etc). </p>
+                            <p>I am aware this analysis is far from an exhaustive one—nor does it pretend to be. I simply was curious to test out my observations as a day-to-day fan using tangible data, looking into the musical landscape of K-Pop as I have experienced it since my introduction to the genre in 2015. I know many groups and albums are missing from this analysis, and I apologize in advance for it. Please be nice :) </p>                            
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>Created with care by Sarah. <a href="mailto:sarah.b7@outlook.com">Click here</a> if you want to get in touch. | Last updated: December 26th, 2024.</p>
+        </footer>     
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="assets/js/script.js"></script>
+    </body>
+</html>
