@@ -3,7 +3,7 @@
 
 const margin = { top: 20, right: 30, bottom: 50, left: 80 };
 let width = parseInt(d3.select(".chart-section").style("width")) - margin.left - margin.right;
-const height = 500 - margin.top - margin.bottom;
+const height = 450 - margin.top - margin.bottom;
 
 const scatter = d3.select("#scatter-plot")
   .append("svg")
@@ -100,7 +100,141 @@ d3.json("assets/data/full_data.json").then(data => {
       d3.select(this).style("fill", "#98bad5").attr("r", 2);
       mouseleave();
     });
+
+  function agencyfilter(selectedAgency){
+    let agencydots = data.filter(d => d.agency == selectedAgency);
+    // console.log(selectedAgency);
+
+    scatter.selectAll(".agencydot")
+    .remove();
+
+    scatter.selectAll(".agencydot")
+    .data(agencydots)
+    .enter().append("circle")
+    .attr("class", "agencydot")
+    .attr("cx", d => x(d.release_date))
+    .attr("cy", d => y(d.duration_sec))
+    .attr("r", 2)
+    .style("fill", "#ffd92f")
+    .attr("z-index", 3)
+    .attr("opacity", 0.8)
+    .on("mouseover", function(event, d) {
+      d3.select(this).style("fill", "orange").attr("r", 5);
+      mouseover(d);
+    })
+    .on("mousemove", mousemove)
+    .on("mouseleave", function(event, d) {
+      d3.select(this).style("fill", "#ffd92f").attr("r", 2);
+      mouseleave();
+    });
+
+    window.addEventListener('scroll', () => {
+      if (isElementInViewport(overall2014) && bool2014) {
+        scatter.selectAll(".agencydot").remove();
+      }
+    });
+
+  }
+
+  $("#agency-filter").on("change", function () {
+    let selected = $(this).val(); 
+    agencyfilter(selected);
+    agencyCurve(selected);
+  });
+
+
+
 }).catch(error => console.error("Error loading data:", error));
+
+
+function agencyCurve(selectedAgency) {
+  
+  d3.json(`assets/data/${selectedAgency}.json`).then(data => {
+    data.forEach(d => {
+        d.year = new Date(d.year); // Convert to Date object
+    });
+
+    const svg = d3.select("#scatter-plot")
+        .select("svg") 
+        .select("g"); 
+    
+    // Scales (same as data)
+    const x = d3.scaleTime()
+      .domain([2007, 2024])
+      .range([0, width]);
+
+    if (selectedAgency === "hybe") {
+      const minYear = d3.min(data, d => d.year);
+      if (minYear > new Date(2007, 0, 1)) {
+        // Add a placeholder point at 2007
+        data.unshift({
+          year: new Date(2007, 0, 1),
+          avg_duration_sec: 0, // or any baseline value
+        });
+      }
+    }
+
+    const y = d3.scaleLinear()
+        .domain([0, 400]).nice()
+        .range([height, 0]);
+
+    const line = d3.line()
+        .curve(d3.curveCardinal.tension(0.2))
+        .x(d => x(d.year))  
+        .y(d => y(d.avg_duration_sec)); 
+
+
+    svg.selectAll(".agencycurve")
+      .remove();
+
+    let path = svg.append("path")
+        .data([data])
+        .attr("class", "line")
+        .attr("class", "agencycurve")
+        .attr("z-index", 5)
+        .attr("d", line)
+        .attr("fill", "none")
+        .attr("stroke-width", 2)
+        .attr("stroke", "#fc8d62");
+
+    const length = path.node().getTotalLength(); 
+    // Make the line appear wowza
+    path.attr("stroke-dasharray", length + " " + length)
+        .attr("stroke-dashoffset", length)
+          .transition()
+          .ease(d3.easeLinear)
+          .attr("stroke-dashoffset", 0)
+          .duration(1200);
+
+    svg.selectAll(".dots")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("class", "dots")
+        .attr("class", "agencycurve")
+        .attr("z-index", 5)
+        .attr("cx", d => x(d.year))
+        .attr("cy", d => y(d.avg_duration_sec))
+        .attr("r", 0) 
+        .attr("fill", "#fc8d62")
+        .style("opacity", 0)
+            .transition()
+              .duration(400)
+              .style("opacity", 1);
+
+    window.addEventListener('scroll', () => {
+    if (isElementInViewport(overall2014) && bool2014) {
+      svg.selectAll(".agencycurve").remove();
+    }
+
+  });
+    
+  }).catch(error => console.error("Error loading data:", error));
+
+  
+
+}
+
 
 
 gsap.registerPlugin(ScrollTrigger); // Plugin for scroll pinning
@@ -121,6 +255,7 @@ const overall2007 = document.querySelector('#overall2007');
 const firstscroll = document.querySelector('#overallFirst');
 const intro2014 = document.querySelector('#intro2014')
 const overall2014 = document.querySelector('#overall2014');
+const exploretab = document.querySelector('#exploretab');
 
 const percent_intro = document.querySelector('#percent_intro');
 const percent_first = document.querySelector('#percent_first');
@@ -132,6 +267,7 @@ let boolFirst = false;
 let bool2007 = false;
 let boolCurve = false;
 let bool2014 = false;
+let boolexplore = false;
 
 let boolPercent = false;
 let bool2020 = false;
@@ -174,6 +310,7 @@ window.addEventListener('scroll', () => {
             .attr("r", 4)  
             .attr("fill", "#527dd9")
             .attr("class", "data2007")
+            .attr("z-index", 5)
             .style("opacity", 0)
             .transition() 
               .duration(800)
@@ -184,7 +321,7 @@ window.addEventListener('scroll', () => {
             .attr("y", y(230.86184) - 10)
             .style("font-weight", 600)
             .attr("fill", "#527dd9")
-            .style("z-index", 2)
+            .style("z-index", 5)
             .html("2007")
             .attr("class", "data2007")
             .style("opacity", 0)
@@ -242,7 +379,7 @@ window.addEventListener('scroll', () => {
                 .range([height, 0]);
         
             const line = d3.line()
-                .curve(d3.curveBasis)
+                .curve(d3.curveCardinal.tension(0.2))
                 .x(d => x(d.year))  
                 .y(d => y(d.avg_duration_sec)); 
 
@@ -251,6 +388,7 @@ window.addEventListener('scroll', () => {
                 .data([data])
                 .attr("class", "line")
                 .attr("class", "data2024")
+                .attr("z-index", 5)
                 .attr("d", line)
                 .attr("fill", "none")
                 .attr("stroke-width", 2)
@@ -272,6 +410,7 @@ window.addEventListener('scroll', () => {
                 .append("circle")
                 .attr("class", "dot")
                 .attr("class", "data2024")
+                .attr("z-index", 5)
                 .attr("cx", d => x(d.year))
                 .attr("cy", d => y(d.avg_duration_sec))
                 .attr("r", 4) 
@@ -284,6 +423,7 @@ window.addEventListener('scroll', () => {
                 .attr("cy", y(data2024.avg_duration_sec))  
                 .attr("r", 4)  
                 .attr("fill", "#527dd9")
+                .attr("z-index", 5)
                 .attr("class", "data2024")
                 .style("opacity", 0)
                 .transition() 
@@ -296,7 +436,7 @@ window.addEventListener('scroll', () => {
                 .attr("y", y(184.0984355231) - 10)
                 .style("font-weight", 600)
                 .attr("fill", "#527dd9")
-                .style("z-index", 2)
+                .attr("z-index", 5)
                 .attr("class", "data2024")
                 .html("2024")
                 .style("opacity", 0)
@@ -341,6 +481,7 @@ window.addEventListener('scroll', () => {
         .attr("r", 4)  
         .attr("fill", "#527dd9")
         .attr("class", "data2014")
+        .attr("z-index", 5)
         .style("opacity", 0)
         .transition() 
             .duration(800)
@@ -351,13 +492,24 @@ window.addEventListener('scroll', () => {
         .attr("y", y(216.617894) - 10)
         .style("font-weight", 600)
         .attr("fill", "#527dd9")
-        .style("z-index", 2)
+        .style("z-index", 5)
         .html("2014")
         .attr("class", "data2014")
         .style("opacity", 0)
         .transition() 
           .duration(800)
           .style("opacity", 1); 
+    }
+
+    if (isElementInViewport(overall2014) && boolexplore) {
+      boolexplore = false;
+      document.getElementById("chart-filter").classList.remove("visible");
+      // document.getElementById("chart-filter").style.visibility = "hidden";
+    }
+
+    if (isElementInViewport(exploretab) && !boolexplore) {
+      boolexplore = true;
+      document.getElementById("chart-filter").classList.add("visible");
     }
 
 });
@@ -686,6 +838,159 @@ d3.json("assets/data/percentage.json").then(data => {
 }).catch(error => console.error("Error loading data:", error));
 
 
+const groupGraph = d3.select("#groupyearcharts")
+  .append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
+  .attr("id", "group-graph")
+  .append("g")
+.attr("transform", `translate(${margin.left},${margin.top})`);
+
+
+  
+function createTimeGraph(timedata) {
+
+  timedata.forEach(d => {
+    d.current_avg = isNaN(d.current_avg) ? 0 : d.current_avg;
+  });
+
+  var x = d3.scaleBand()
+  .range([0, width])
+  .domain(timedata.map(function(d) { return d.year; }))
+  .padding(0.2);
+
+  groupGraph.select(".x-axis").remove();
+  groupGraph.select(".y-axis").remove();
+
+  groupGraph.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .attr("class", "x-axis")
+    .call(d3.axisBottom(x))
+    .selectAll("text")
+      .style("text-anchor", "end");
+
+  var y = d3.scaleLinear()
+    .domain([0, 300])
+    .range([height, 0]);
+  groupGraph.append("g")
+    .attr("class", "y-axis")
+    .call(d3.axisLeft(y));
+    
+  // Update the X and Y labels
+  groupGraph.selectAll(".graph-label").remove();
+  groupGraph.selectAll(".y-label").remove();
+
+  groupGraph.append("text")
+    .attr("x", width / 2)
+    .attr("class", "graph-label")
+    .attr("y", height + margin.bottom - 10)
+    .style("text-anchor", "middle")
+    .text("Year");
+
+  groupGraph.append("text")
+    .attr("x", -height / 2)
+    .attr("y", -margin.left + 20)
+    .attr("class", "graph-label")
+    .attr("class", "y-label")
+    .attr("transform", "rotate(-90)")
+    .style("text-anchor", "middle")
+    .text("Duration (seconds)");
+
+
+  var bars = groupGraph.selectAll("rect")
+    .data(timedata);
+
+
+    // Tooltip
+  const tooltip = d3.select("body")
+    .append("div")
+    .style("opacity", 0)
+    .attr("class", "tooltip")
+    .style("position", "absolute")
+    .style("background-color", "white")
+    .style("border-radius", "5px")
+    .style("padding", "5px")
+    .style("width", "fit-content")
+    .style("box-shadow", "rgba(149, 157, 165, 0.2) 0px 8px 24px");
+
+  // Tooltip functions
+  const mouseover = function(d) {
+    tooltip.style("opacity", 1);
+  };
+
+  const mousemove = function(event, d) {
+    tooltip
+      .html("<span class='tooltip-text'><strong>" + d.year + "</strong><br>" + d.current_avg + " seconds</span>")
+      .style("left", (event.pageX + 10) + "px")
+      .style("top", (event.pageY + 10) + "px");
+  };
+
+  const mouseleave = function() {
+    tooltip.style("opacity", 0);
+  };
+
+  var defs = groupGraph.append("defs");
+
+  var gradient = defs.append("linearGradient")
+    .attr("id", "bar-gradient")
+    .attr("x1", "0%")
+    .attr("x2", "0%")
+    .attr("y1", "0%")
+    .attr("y2", "100%");
+
+  gradient.append("stop")
+    .attr("offset", "0%")
+    .attr("stop-color", "#8da0cb")
+    .attr("stop-opacity", 1);
+
+  gradient.append("stop")
+    .attr("offset", "100%")
+    .attr("stop-color", "#bebada")
+    .attr("stop-opacity", 1);
+
+
+  bars.exit()
+    .transition()
+    .duration(500)
+    .attr("height", 0)
+    .attr("y", height)
+    .remove();
+
+  // Update existing bars
+  bars.transition()
+    .duration(800)
+    .attr("x", function(d) { return x(d.year); })
+    .attr("y", function(d) { return y(d.current_avg); })
+    .attr("width", x.bandwidth())
+    .attr("height", function(d) { return height - y(d.current_avg); })
+    .attr("fill", "url(#bar-gradient)");
+
+  // Add new bars
+  bars.enter()
+    .append("rect")
+    .attr("x", function(d) { return x(d.year); })
+    .attr("width", x.bandwidth())
+    .attr("fill", "url(#bar-gradient)")
+    .attr("y", height)
+    .attr("height", 0)
+    .on("mouseover", function(event, d) {
+      d3.select(this).attr("fill", "#fa9ebc");
+      mouseover(d);
+    })
+    .on("mousemove", mousemove)
+    .on("mouseout", function(event, d) {
+      d3.select(this).attr("fill", "url(#bar-gradient)");
+      mouseleave();
+    })
+    .transition()
+    .duration(800)
+    .attr("y", function(d) { return y(d.current_avg); })
+    .attr("height", function(d) { return height - y(d.current_avg); });  
+
+
+    
+}
+
 function getArtistData(selectedArtist) {
   d3.json("assets/data/full_data.json").then(data => {
 
@@ -732,14 +1037,27 @@ function getArtistData(selectedArtist) {
     let today_seconds = today_avg % 60;
 
     let debut_comparison;
-    if (debut_year == 2024) {
+    if (debut_year == 2024 || debut_year == today) {
       debut_comparison = false;
     } else {
       debut_comparison = true;
     }
 
+    let timedata = [];
+
+    for (let year = debut_year; year <= today; year++) {
+      let current_data = data.filter(d => new Date(d.release_date).getFullYear() === year);
+      let current_avg = parseInt(d3.mean(current_data, d => d.duration_sec));
+      let current = {year, current_avg};
+      timedata.push(current);
+    }
+
+    console.log(timedata);
+
     if (selectedArtist == "TVXQ") {
       debut_year = 2003;
+    } else if (selectedArtist == "BLACKPINK") {
+      debut_year = 2016;
     }
 
     let change_indicator;
@@ -757,6 +1075,8 @@ function getArtistData(selectedArtist) {
     if (debut_comparison) {
       if (document.getElementById("debut_comparison").style.display = 'none'){
         document.getElementById("debut_comparison").style.display = 'block'
+        document.getElementById("groupyearcharts").style.display = 'block';
+        document.getElementById("missingdata").style.display = 'block';
       }
       document.getElementById("debut_minutes").innerHTML = debut_minutes;
       document.getElementById("debut_seconds").innerHTML = debut_seconds;
@@ -782,8 +1102,11 @@ function getArtistData(selectedArtist) {
       } else {
         document.getElementById("change_sentence").style.display = 'none';
       }
+      createTimeGraph(timedata);
     } else {
-      document.getElementById("debut_comparison").style.display = 'none'
+      document.getElementById("debut_comparison").style.display = 'none';
+      document.getElementById("groupyearcharts").style.display = 'none';
+      document.getElementById("missingdata").style.display = 'none';
     }
 
     let agency = data[0].agency;
@@ -796,9 +1119,6 @@ function getArtistData(selectedArtist) {
 
       $("#agency-select").on("change", function () {
         let selected = $(this).val(); 
-        // $(".group-name").each(function () {
-        //     $(this).text(selected); 
-        // });
         getAgencyData(selected);
         $('#agency-highlights').fadeIn();
         $('html, body').animate({
@@ -822,6 +1142,8 @@ function getArtistData(selectedArtist) {
 
   }).catch(error => console.error("Error loading data:", error));
 }
+
+
 
 function getSameAgencyData(selectedAgency, groupavg) {
   d3.json("assets/data/full_data.json").then(data => {
@@ -906,55 +1228,11 @@ function getSameAgencyData(selectedAgency, groupavg) {
     document.getElementById("minutes_2024").innerHTML = minutes_2024;
     document.getElementById("seconds_2024").innerHTML = seconds_2024;
 
-    $("#outro").fadeIn();
-    $(document).ready(function() {
-      const $chartContainer = $("#player02");
-      const $endTrack = $("#end-track");
-      ScrollTrigger.create({
-        trigger: $chartContainer[0],
-        start: "center center",
-        endTrigger: $endTrack[0],
-        end: "bottom bottom",
-        scrub: true,
-        pin: true, 
-        pinSpacing: false,
-        anticipatePin: 1         
-      });
-    });
-
-    var timetime = document.querySelector('#track')
-    let widthSvg = $(timetime).width();
-    console.log(widthSvg);
-    // call to draw chkchkboom
-    drawChart(example_songs[0], widthSvg);
-
-    window.addEventListener('scroll', () => {
-      if (isElementInViewport(supershy) && !boolsupershy) {
-          boolsupershy = true;
-          // console.log("im super shy super shy");
-          document.getElementById("tracktitle").innerHTML = "Super Shy";
-          document.getElementById("trackartist").innerHTML = "New Jeans"
-          document.getElementById("lasttime").innerHTML = "02:35";
-          drawChart(example_songs[1], widthSvg);
-          return false;
-      }
-
-      if(isElementInViewport(chkchkboom) && boolsupershy) {
-        boolsupershy = false;
-        // console.log("boom boom chk chk boom");
-        document.getElementById("tracktitle").innerHTML = "Chk Chk Boom";
-        document.getElementById("trackartist").innerHTML = "Stray Kids"
-        document.getElementById("lasttime").innerHTML = "02:28";
-        drawChart(example_songs[0], widthSvg);
-        // return false;
-      }
-    });
+    triggerOutro();
     
   }).catch(error => console.error("Error loading data:", error));
 
 }
-
-
 
 function getAgencyData(selectedAgency) {
   console.log("Function called!")
@@ -1018,49 +1296,8 @@ function getAgencyData(selectedAgency) {
 
     document.getElementById("mnts_2024").innerHTML = minutes_2024;
     document.getElementById("scds_2024").innerHTML = seconds_2024;
-    $("#outro").fadeIn();
-    $(document).ready(function() {
-      const $chartContainer = $("#player02");
-      const $endTrack = $("#end-track");
-      ScrollTrigger.create({
-        trigger: $chartContainer[0], 
-        start: "center center",      
-        endTrigger: $endTrack[0],   
-        end: "bottom bottom",        
-        scrub: true,          
-        pin: true, 
-        pinSpacing: false,      
-        anticipatePin: 1
-      });
-    });
 
-    var timetime = document.querySelector('#track')
-    let widthSvg = $(timetime).width();
-    console.log(widthSvg);
-    // call to draw chkchkboom
-    drawChart(example_songs[0], widthSvg);
-
-    window.addEventListener('scroll', () => {
-      if (isElementInViewport(supershy) && !boolsupershy) {
-          boolsupershy = true;
-          // console.log("im super shy super shy");
-          document.getElementById("tracktitle").innerHTML = "Super Shy";
-          document.getElementById("trackartist").innerHTML = "New Jeans"
-          document.getElementById("lasttime").innerHTML = "02:35";
-          drawChart(example_songs[1], widthSvg);
-          return false;
-      }
-
-      if(isElementInViewport(chkchkboom) && boolsupershy) {
-        boolsupershy = false;
-        // console.log("boom boom chk chk boom");
-        document.getElementById("tracktitle").innerHTML = "Chk Chk Boom";
-        document.getElementById("trackartist").innerHTML = "Stray Kids"
-        document.getElementById("lasttime").innerHTML = "02:28";
-        drawChart(example_songs[0], widthSvg);
-        // return false;
-      }
-    });
+    triggerOutro();
     
   }).catch(error => console.error("Error loading data:", error));
   console.log("Function done!")
@@ -1070,13 +1307,11 @@ function getAgencyData(selectedAgency) {
 // don't delete pls
 let boolsupershy = false;
 let boolchkchkboom = false;
+let booltempo = false;
 let previous;
 
 $(document).ready(function(){
   
-    
-  
-
     let artists = ["NCT 127", "NCT DREAM", "NCT WISH", "NCT DOJAEJUNG", "WayV", "Brown Eyed Girls", "KARA", "F.T. Island", "4MINUTE", "BEAST", "CNBLUE", "SISTAR", "TEEN TOP", "Apink", "B1A4", "Boyfriend", "Block B", "B.A.P", "EXID", "BTOB", "VIXX", "AOA", "MAMAMOO", "GFRIEND", "MONSTA X", "OH MY GIRL", "N.Flying", "ONEWE", "ASTRO", "WJSN", "I.O.I", "SF9", "\uc774\ub2ec\uc758 \uc18c\ub140", "PENTAGON", "KARD", "Dreamcatcher", "HIGHLIGHT", "ONF", "Wanna One", "Weki Meki", "Golden Child", "THE BOYZ", "(G)I\u2010DLE", "ONEUS", "ATEEZ", "IZ*ONE", "AB6IX", "CIX", "Cravity", "Weeekly", "P1Harmony", "PURPLE KISS", "IVE", "Kep1er", "Xikers", "ZEROBASEONE", "TVXQ", "SUPER JUNIOR", "Girls' Generation", "SHINee", "EXO", "Red Velvet", "aespa", "RIIZE", "2PM", "GOT7", "DAY6", "TWICE", "Stray Kids", "ITZY", "NiziU", "NMIXX", "Xdinary Heroes", "NEXZ", "Miss A", "Wonder Girls", "BTS", "TOMORROW X TOGETHER", "ENHYPEN", "ILLIT", "LE SSERAFIM", "SEVENTEEN", "BOYNEXTDOOR", "New Jeans", "TWS", "NU'EST", "2NE1", "BIGBANG", "AKMU", "WINNER", "BLACKPINK", "TREASURE", "BABYMONSTER", "iKON"];
 
     artists.sort();
@@ -1087,6 +1322,14 @@ $(document).ready(function(){
         option.html(this);
         option.val(this);
         dropdown.append(option);
+    });
+
+    var groupfilter = $("#group-filter");
+    $(artists).each(function () {
+        var option = $("<option />");
+        option.html(this);
+        option.val(this);
+        groupfilter.append(option);
     });
 
     dropdown.on("change", function () {
@@ -1112,7 +1355,7 @@ $(document).ready(function(){
 });
 
 
-const example_songs = [{"name": "chk chk boom", "verse1": 37, "prechorus1": 9, "chorus1": 19, "verse2": 29, "prechorus2": 9, "chorus2": 19, "outro": 26 }, {"name": "super shy", "chorus1": 38, "verse2": 13, "prechorus2": 13, "chorus2": 25, "verse3": 13, "chorus3": 25, "outro2": 28}];
+const example_songs = [{"name": "chk chk boom", "verse1": 37, "prechorus1": 9, "chorus1": 19, "verse2": 29, "prechorus2": 9, "chorus2": 19, "outro": 26 }, {"name": "super shy", "chorus1": 38, "verse2": 13, "prechorus2": 13, "chorus2": 25, "verse3": 13, "chorus3": 25, "outro2": 28}, {"name": "tempo", "intro1": 16, "chorus5": 17, "postchorus1": 8, "verse4": 17, "prechorus3": 16, "chorus6": 17, "postchorus2": 8, "verse5": 17, "prechorus4": 16, "outro3": 70, "chorus7": 22}];
 
 const keys = Array.from(
   new Set(
@@ -1156,6 +1399,8 @@ const trackGraph = trackBox.append("svg")
 
 const chart = trackGraph.append("g");
 
+
+// Song drawing function for last graph
 function drawChart(song, offset) {
   chart.selectAll("*").remove();
 
@@ -1200,6 +1445,7 @@ function drawChart(song, offset) {
       return prev;
     })
     .attr("y", 0)
+    .attr("data-name", d => d.key)
     .attr("height", height - margin.top - margin.bottom)
     .attr("width", d => (d.value / total) * (100) + "%")
     .attr("fill", d => color(d.key.replace(/\d+$/, ""))
@@ -1213,8 +1459,77 @@ function drawChart(song, offset) {
 // don't delete LOL
 const supershy = document.querySelector('#supershy');
 const chkchkboom = document.querySelector('#chkchkboom');
+const tempo = document.querySelector('#tempo');
 
+function triggerOutro(){
 
+  $("#outro").fadeIn();
+    $(document).ready(function() {
+      const $chartContainer = $("#player02");
+      const $endTrack = $("#end-track");
+      ScrollTrigger.create({
+        trigger: $chartContainer[0],
+        start: "center center",
+        endTrigger: $endTrack[0],
+        end: "bottom bottom",
+        scrub: true,
+        pin: true, 
+        pinSpacing: false,
+        anticipatePin: 1         
+      });
+    });
+
+    var timetime = document.querySelector('#track')
+    let widthSvg = $(timetime).width();
+    // console.log(widthSvg);
+    // call to draw chkchkboom
+    drawChart(example_songs[0], widthSvg);
+
+    window.addEventListener('scroll', () => {
+      if (isElementInViewport(supershy) && !boolsupershy) {
+          boolsupershy = true;
+          // console.log("im super shy super shy");
+          document.getElementById("tracktitle").innerHTML = "Super Shy";
+          document.getElementById("trackartist").innerHTML = "New Jeans"
+          document.getElementById("lasttime").innerHTML = "02:35";
+          drawChart(example_songs[1], widthSvg);
+          return false;
+      }
+
+      if(isElementInViewport(chkchkboom) && boolsupershy) {
+        boolsupershy = false;
+        // console.log("boom boom chk chk boom");
+        document.getElementById("tracktitle").innerHTML = "Chk Chk Boom";
+        document.getElementById("trackartist").innerHTML = "Stray Kids"
+        document.getElementById("lasttime").innerHTML = "02:28";
+        drawChart(example_songs[0], widthSvg);
+        // return false;
+      }
+
+      if (isElementInViewport(tempo) && !booltempo) {
+          booltempo = true;
+          // console.log("im super shy super shy");
+          document.getElementById("tracktitle").innerHTML = "Tempo";
+          document.getElementById("trackartist").innerHTML = "EXO"
+          document.getElementById("lasttime").innerHTML = "03:44";
+          drawChart(example_songs[2], widthSvg);
+          return false;
+      }
+
+      if(isElementInViewport(supershy) && booltempo) {
+        booltempo = false;
+        // console.log("boom boom chk chk boom");
+        document.getElementById("tracktitle").innerHTML = "Super Shy";
+        document.getElementById("trackartist").innerHTML = "New Jeans"
+        document.getElementById("lasttime").innerHTML = "02:35";
+        drawChart(example_songs[1], widthSvg);
+        // return false;
+      }
+      
+
+    });
+
+}
 
 var acc = document.getElementsByClassName("accordion");
 var i;
@@ -1227,9 +1542,6 @@ for (i = 0; i < acc.length; i++) {
       panel.style.maxHeight = null;
     } else {
       panel.style.maxHeight = panel.scrollHeight + "px";
-      $('html, body').animate({
-        scrollTop: $("#metho1").offset().top - 130
-      }, 800);
     }
   });
 }

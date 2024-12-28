@@ -189,7 +189,7 @@
                 <h2 class="subtitle">Just how shorter have K-Pop tracks gotten in the past decade? </h2>
             </div>
             <div class="byline">
-                <p class="date">December 26<sup>th</sup>, 2024</p>
+                <p class="date">December 28th, 2024</p>
             </div>   
             <div class="main-content">
                 <div class="text-section">
@@ -201,9 +201,26 @@
                         <img class="image2" src="assets/img/frame.gif" />
                     </div>  
                     <p>The question kept gnawing at me—<em>where are the long songs?</em> Think of the four-minute grandiose tracks that were common currency among second generation groups, like Girls’ Generation’s <em>I Got a Boy</em>, at 4 minutes and 31 seconds, or TVXQ’s <em>Catch Me</em>, that was even longer at 4 minutes and 39 seconds. Even among third generation groups, songs below the three-minute mark were incredibly rare, to my memory.</p>
-                    <p>Nowadays (and it isn’t just an issue with Stray Kids), it seems as though three minutes isn’t even considered a standard in song length anymore. How has it changed over time? In order to answer this question, I’ve set out to analyze over 9000 K-Pop songs released between 2007 and 2024 and their duration, using <a href="https://musicbrainz.org/" target="_blank">MusicBrainz</a>'s database, an online collaborative music database.</p>
+                    <p>Nowadays (and it isn’t just an issue with Stray Kids), it seems as though three minutes isn’t even considered a standard in song length anymore. How has it changed over time? In order to answer this question, I’ve set out to analyze over 9000 K-Pop songs released between 2007 and 2024 and their duration, using <a href="https://musicbrainz.org/" target="_blank">MusicBrainz</a>’s database, an online collaborative music database (see <a href="#methodology">methodology</a> for details).</p>
                 </div>
-                <div class="chart-section" id="scatter-plot"></div>
+                <div class="chart-section" id="scatter-plot">
+                  <div id="chart-filter">
+                     <div class="selector">
+                        <select id="agency-filter" name="group">
+                            <option disabled selected>Choose...</option>
+                            <option value="sm">SM Entertainment</option>
+                            <option value="jyp">JYP Entertainment</option>
+                            <option value="yg">YG Entertainment</option>
+                            <option value="hybe">HYBE</option>
+                        </select>
+                    </div>
+                    <!-- <div class="selector">
+                        <select id="group-filter" name="group">
+                           <option disabled selected>Choose...</option>
+                        </select>
+                     </div> -->
+                  </div>
+                </div>
                 <div id="overallAnalysis">
                     <div class="section-box first" id="overallFirst">
                     <div class="text-box">
@@ -229,8 +246,9 @@
                         <p>The average song length that year was <strong>3 minutes and 36 seconds</strong>; average song duration has suffered a 15% decrease since then. Interestingly enough, 2014 is the last year analyzed that had seen an increase in song duration from the previous year; all following years have seen a decrease since. </p>
                     </div></div>
                     <div class="section-box">
+                        <div id="exploretab"></div>
                         <div class="text-box">
-                            <p>If you want to explore the data a little, hover over each dot; you'll be able to see the song's title and group.</p>
+                            <p>If you want to explore the data a little, hover over each dot; you’ll be able to see the song’s title and group. You can also filter per entertainment agency among the “Big Four” (more on them later), using the selector.</p>
                         </div></div>
                 </div>
                 <div id="next">
@@ -240,7 +258,7 @@
                     <div class="section-box first">
                         <div id="percent_intro"></div>
                         <div class="text-box">
-                        <p>The portion of songs below the three-minute mark has absolutely exploded since 2020, around the same time TikTok rose in popularity (more on that later).<p>
+                        <p>The portion of songs below the three-minute mark has absolutely exploded since 2020, around the same time TikTok rose in popularity (again, more on that later).<p>
                         </div>
                     </div>
                     <div class="section-box">
@@ -291,6 +309,19 @@
                             <p>In the case of <strong><span class="group-name"></span></strong>, their average song duration is <span id="total_avg"></span> seconds, or <strong><span id="avg_minutes"></span> minutes and <span id="avg_seconds"></span> seconds</strong>. Compared to the rest of the dataset, <strong><span class="group-name"></span></strong>’s average song length is <span id="length_indicator"></span> the norm. The average song in the dataset is about <span id="overallMin"></span> minutes and <span id="overallSec"></span> seconds long.</p>
                             <p id="debut_comparison">Since their debut in <span id="debut_year"></span>, their average song length went from <strong><span id="debut_minutes"></span> minutes and <span id="debut_seconds"></span> seconds</strong> during their debut era to <strong><span id="today_minutes"></span> minutes and <span id="today_seconds"></span> seconds</strong> in <span id="today"></span>. <span id="change_sentence">That is a <span id="change_indicator"></span> of <strong><span id="diff_seconds"></span> second<span id="plural-seconds">s</span></strong>, or about <span id="change_percent"></span>%. </span></p>
                         </div>
+                        <div id="groupyearcharts" class="chart-section first"></div>
+                        <div class="text-section" id="missingdata">
+                           <h4 class="accordion first">Why is there data missing in the graph?
+                               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16" style="text-align: center; margin-left: 5px; transform: translateY(3px)">
+                                   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                   <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                 </svg>
+                           </h4>
+                               <div class="panel">
+                                   <p id="">Notice there’s data missing in a year you <em>know</em> a group has released music? There are various reasons for this; duplicates were deleted during data processing, which leads some years to have no data if tracks were to appear in previous or later releases. There might have also been issues during data fetching, and thus, the data is simply missing; see <a href="#methodology">methodology</a> for details.</p>                            
+                           </div>
+                       </div>
+                   </div>
                     </div>
                     <div id="sameagency-highlights">
                         <div class="text-section">
@@ -329,7 +360,7 @@
                 <div id="outro_trigger"></div>
                 <div class="text-section" id="outro" style="padding-top: 20px;">
                     <p>Songs getting shorter and shorter with time isn’t rare in mainstream music. Analyses like these have been done in a plethora of genres; my own inspiration for this piece came from <a href="https://www.rapminerz.io/articles/jusquou-les-morceaux-vont-ils-retrecir" target="_blank">RapMinerz’s analysis of French rap</a>, which found the same trend in song duration, but also <a href="https://www.youtube.com/watch?v=quFdTImUloc&ab_channel=RapMinerz%F0%9F%94%A5%E2%9B%8F%EF%B8%8F" target="_blank">significant change in song structure</a>. <em>The Washington Post</em> also did <a href="https://www.washingtonpost.com/entertainment/interactive/2024/shorter-songs-again/" target="_blank">a similar analysis across mainstream music</a>, which did include a mention of New Jeans. Commentary on the same phenomenon also floods the Internet, such as <a href="https://www.youtube.com/watch?v=kMUbuQWzI-c&ab_channel=everglow-up" target="_blank">this (really interesting) video</a> on this very same trend in K-Pop.</p>
-                    <p>Technological changes in the industry are often pointed to as the main culprit, especially the rise of streaming platforms like Spotify and Apple Music in the early 2010s. A two-minute song on a streaming platform will be played more often in the span of an hour than a four-minute one—and thus, will likely generate more revenue at the end of the line. Since plays are counted only starting at the 30-second mark, artists tend not to waste time on an elaborate intro anymore—it's more profitable, after all, to get to the hook as quickly as one can before you skip the song, which can also lead to a shorter song overall.</p>
+                    <p>Technological changes in the industry are often pointed to as the main culprit, especially the rise of streaming platforms like Spotify and Apple Music in the early 2010s. A two-minute song on a streaming platform will be played more often in the span of an hour than a four-minute one—and thus, will likely generate more revenue at the end of the line. Since plays are counted only starting at the 30-second mark, artists tend not to waste time on an elaborate intro anymore—it is more profitable, after all, to get to the hook as quickly as one can before you skip the song, which can also lead to a shorter song overall.</p>
                     <p>Something that came out in both <em>The Washington Post</em>’s and RapMinerz’s analyses was the absence of the bridge—or, in French rap, “<em>la mort du troisième couplet</em>”, or the death of the third verse, a once fundamental part of the structure of a classic hip-hop track. Like many others, I’ve noticed the same trend in K-Pop; while the bridge has long been a treasured and iconic part in song structure in the industry, often allowing for vocal prowess from main singers to elaborate dance breaks, it is less and less rare to see them completely gone from title tracks. </p>
                     <div id="player02"  class="player horizontal chart-section">
                         <div class="wrapper">
@@ -390,6 +421,24 @@
                                  <p>The same thing happens in New Jeans’ hit <strong><em>Super Shy</em></strong>; rather than a bridge, the song peters off into a rendition of the <span style="color: #fc8d62; font-weight: 600;">pre-chorus</span> that serves as an <span style="color: #e78ac3; font-weight: 600;">outro</span>. The song, in total, is only 2 minutes and 35 seconds, after all.</p>
                             </div>
                         </div>
+                        <div class="section-box">
+                           <div id="tempo"></div>
+                           <div class="text-box">
+                                <p>Let’s take a look at another song, on the other end of the spectrum: EXO’s <strong><em>Tempo</em></strong>, released back in 2018. It is not one of the longest songs of the dataset, although it does fit above the average, at 3 minutes at 44 seconds. It is, however, an incredible example of a strong song structure and a phenomenal <span style="color: #e78ac3; font-weight: 600;">bridge</span>.</p>
+                           </div>
+                       </div>
+                       <div class="section-box">
+                        <div></div>
+                        <div class="text-box">
+                             <p>Most of the song before the bridge follows a rather simple formula, constructed around two <span style="color: #66c2a5; font-weight: 600;">verses</span>, but it is already more complex than the previous two tracks: <em>Tempo</em> starts with a distinct <span style="color: #a6d854; font-weight: 600;">intro</span>, and also features both a <span style="color: #fc8d62; font-weight: 600;">pre-chorus</span> before and a <span style="color: #ffd92f; font-weight: 600;">post-chorus</span> after each <span style="color: #8da0cb; font-weight: 600;">chorus</span> apart from the last.</p>
+                        </div>
+                     </div>
+                     <div class="section-box">
+                        <div></div>
+                        <div class="text-box">
+                             <p>The wonderful thing about <em>Tempo</em>, though, is the sheer length of its <span style="color: #e78ac3; font-weight: 600;">bridge</span>: at about 70 seconds, it is the longest part of the song and its most complex—filled with acapella and tasteful harmonies, creating a whole new moment in the song, while also calling back to the <span style="color: #a6d854; font-weight: 600;">intro</span>. Something that could not have been achieved had the song been a mere 2 minutes and 30-something seconds.</p>
+                        </div>
+                     </div>
                     </div>
                     <div id="end-track"></div>
                     <div class="parent scroll">
@@ -406,7 +455,7 @@
                         <img class="image2" src="assets/img/frame.gif" />
                     </div>
                 </div>
-                <div class="text-section" id="#methodology">
+                <div class="text-section" id="methodology">
                     <h4 class="accordion">Methodology
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16" style="text-align: center; margin-left: 5px; transform: translateY(3px)">
                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
