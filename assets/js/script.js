@@ -103,7 +103,6 @@ d3.json("assets/data/full_data.json").then(data => {
 
   function agencyfilter(selectedAgency){
     let agencydots = data.filter(d => d.agency == selectedAgency);
-    // console.log(selectedAgency);
 
     scatter.selectAll(".agencydot")
     .remove();
@@ -332,7 +331,6 @@ window.addEventListener('scroll', () => {
 
 
     if (isElementInViewport(firstscroll) && bool2007) {
-      console.log('#DELETE2007 is visible on the screen!');
       bool2007 = false;
       let svg = d3.select("#scatter-plot")
             .select("svg") 
@@ -504,7 +502,6 @@ window.addEventListener('scroll', () => {
     if (isElementInViewport(overall2014) && boolexplore) {
       boolexplore = false;
       document.getElementById("chart-filter").classList.remove("visible");
-      // document.getElementById("chart-filter").style.visibility = "hidden";
     }
 
     if (isElementInViewport(exploretab) && !boolexplore) {
@@ -876,7 +873,6 @@ function createTimeGraph(timedata) {
     .attr("class", "y-axis")
     .call(d3.axisLeft(y));
     
-  // Update the X and Y labels
   groupGraph.selectAll(".graph-label").remove();
   groupGraph.selectAll(".y-label").remove();
 
@@ -900,7 +896,6 @@ function createTimeGraph(timedata) {
   var bars = groupGraph.selectAll("rect")
     .data(timedata);
 
-
     // Tooltip
   const tooltip = d3.select("body")
     .append("div")
@@ -921,8 +916,8 @@ function createTimeGraph(timedata) {
   const mousemove = function(event, d) {
     tooltip
       .html("<span class='tooltip-text'><strong>" + d.year + "</strong><br>" + d.current_avg + " seconds</span>")
-      .style("left", (event.pageX + 10) + "px")
-      .style("top", (event.pageY + 10) + "px");
+      .style("left", (event.pageX - 40) + "px")
+      .style("top", (event.pageY - 65) + "px");
   };
 
   const mouseleave = function() {
@@ -956,7 +951,6 @@ function createTimeGraph(timedata) {
     .attr("y", height)
     .remove();
 
-  // Update existing bars
   bars.transition()
     .duration(800)
     .attr("x", function(d) { return x(d.year); })
@@ -965,7 +959,6 @@ function createTimeGraph(timedata) {
     .attr("height", function(d) { return height - y(d.current_avg); })
     .attr("fill", "url(#bar-gradient)");
 
-  // Add new bars
   bars.enter()
     .append("rect")
     .attr("x", function(d) { return x(d.year); })
@@ -1051,8 +1044,6 @@ function getArtistData(selectedArtist) {
       let current = {year, current_avg};
       timedata.push(current);
     }
-
-    console.log(timedata);
 
     if (selectedArtist == "TVXQ") {
       debut_year = 2003;
@@ -1143,6 +1134,124 @@ function getArtistData(selectedArtist) {
   }).catch(error => console.error("Error loading data:", error));
 }
 
+var sameAgencyGraph = d3.select("#sameAgencychart")
+  .append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", 380)
+  .attr("id", "sameagency-graph")
+  .append("g")
+.attr("transform", `translate(${margin.left},${margin.top})`);
+
+var agencyChart = d3.select("#agencyChart")
+  .append("svg")
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", 380)
+  .attr("id", "agency-graph")
+  .append("g")
+.attr("transform", `translate(${margin.left},${margin.top})`);
+
+function createAgencyChart(selectedAgency, selectedChart) {
+
+  d3.json(`assets/data/full_data.json`).then(data => {
+
+    data = data.filter(d => { 
+      return d.agency == selectedAgency;
+    });
+
+    var datapergroup = d3.group(data, d => d.artist);
+    let averages = [];
+    
+    datapergroup.forEach((values, artist) => {
+      let group_avg = parseInt(d3.mean(values, d => d.duration_sec));
+      averages.push({ artist: artist, group_avg: group_avg });
+    });
+
+    // Scales
+    var x = d3.scaleLinear()
+      .range([margin.left, width - margin.right])
+      .domain([0, d3.max(averages, d => d.group_avg)]);
+
+    var y = d3.scaleBand()
+      .domain(d3.sort(averages, d => -d.group_avg).map(d => d.artist))
+      .rangeRound([margin.top, 380 - margin.bottom])
+      .padding(0.1);
+
+    // Axes
+    selectedChart.select(".x-axis").remove();
+    selectedChart.select(".y-axis").remove();
+    selectedChart.select("defs").remove();
+
+    selectedChart.append("g")
+      .attr("class", "x-axis")
+      .attr("transform", `translate(0, ${margin.top})`)
+      .call(d3.axisTop(x).ticks(5).tickFormat(d => `${d} sec`));
+
+    selectedChart.append("g")
+      .attr("class", "y-axis")
+      .attr("transform", `translate(${margin.left}, 0)`)
+      .call(d3.axisLeft(y));
+
+    // Tooltip setup
+    const tooltip = d3.select("body").append("div")
+      .style("opacity", 0)
+      .attr("class", "tooltip")
+      .style("position", "absolute")
+      .style("background-color", "white")
+      .style("border-radius", "5px")
+      .style("padding", "5px");
+
+    // Tooltip functions
+    const mouseover = () => tooltip.style("opacity", 1);
+    const mousemove = (event, d) => tooltip
+      .html(`<span class='tooltip-text'><strong>${d.artist}</strong><br>${d.group_avg} seconds</span>`)
+      .style("left", `${event.pageX + 10}px`)
+      .style("top", `${event.pageY + 10}px`);
+    const mouseleave = () => tooltip.style("opacity", 0);
+
+    
+    var defs = selectedChart.append("defs");
+    var gradient = defs.append("linearGradient")
+      .attr("id", "rect-gradient")
+      .attr("x1", "0%") 
+      .attr("x2", "100%") 
+      .attr("y1", "0%") 
+      .attr("y2", "0%");
+    gradient.append("stop")
+      .attr("offset", "0%")
+      .attr("stop-color", "#8da0cb");
+    gradient.append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", "#bebada");
+
+    
+    var bars = selectedChart.selectAll("rect").data(averages);
+
+    bars.exit().transition().duration(500).attr("width", 0).remove();
+
+    bars.enter()
+      .append("rect")
+      .merge(bars)
+      .attr("class", "bar")
+      .attr("x", margin.left)
+      .attr("y", d => y(d.artist))
+      .attr("width", d => x(d.group_avg) - margin.left)
+      .attr("height", y.bandwidth())
+      .attr("fill", "url(#rect-gradient)")
+      .on("mouseover", function(event, d) {
+        d3.select(this).attr("fill", "#fa9ebc");
+        mouseover(d);
+      })
+      .on("mousemove", mousemove)
+      .on("mouseout", function(event, d) {
+        d3.select(this).attr("fill", "url(#rect-gradient)");
+        mouseleave();
+      })
+      .transition()
+      .duration(800);
+
+  }).catch(error => console.error("Error loading data:", error));
+
+}
 
 
 function getSameAgencyData(selectedAgency, groupavg) {
@@ -1228,6 +1337,8 @@ function getSameAgencyData(selectedAgency, groupavg) {
     document.getElementById("minutes_2024").innerHTML = minutes_2024;
     document.getElementById("seconds_2024").innerHTML = seconds_2024;
 
+    createAgencyChart(selectedAgency, sameAgencyGraph);
+
     triggerOutro();
     
   }).catch(error => console.error("Error loading data:", error));
@@ -1235,7 +1346,6 @@ function getSameAgencyData(selectedAgency, groupavg) {
 }
 
 function getAgencyData(selectedAgency) {
-  console.log("Function called!")
   d3.json("assets/data/full_data.json").then(data => {
 
     data = data.filter(d => { 
@@ -1297,10 +1407,11 @@ function getAgencyData(selectedAgency) {
     document.getElementById("mnts_2024").innerHTML = minutes_2024;
     document.getElementById("scds_2024").innerHTML = seconds_2024;
 
+    createAgencyChart(selectedAgency, agencyChart);
+    
     triggerOutro();
     
   }).catch(error => console.error("Error loading data:", error));
-  console.log("Function done!")
 
 }
 
@@ -1312,7 +1423,7 @@ let previous;
 
 $(document).ready(function(){
   
-    let artists = ["NCT 127", "NCT DREAM", "NCT WISH", "NCT DOJAEJUNG", "WayV", "Brown Eyed Girls", "KARA", "F.T. Island", "4MINUTE", "BEAST", "CNBLUE", "SISTAR", "TEEN TOP", "Apink", "B1A4", "Boyfriend", "Block B", "B.A.P", "EXID", "BTOB", "VIXX", "AOA", "MAMAMOO", "GFRIEND", "MONSTA X", "OH MY GIRL", "N.Flying", "ONEWE", "ASTRO", "WJSN", "I.O.I", "SF9", "\uc774\ub2ec\uc758 \uc18c\ub140", "PENTAGON", "KARD", "Dreamcatcher", "HIGHLIGHT", "ONF", "Wanna One", "Weki Meki", "Golden Child", "THE BOYZ", "(G)I\u2010DLE", "ONEUS", "ATEEZ", "IZ*ONE", "AB6IX", "CIX", "Cravity", "Weeekly", "P1Harmony", "PURPLE KISS", "IVE", "Kep1er", "Xikers", "ZEROBASEONE", "TVXQ", "SUPER JUNIOR", "Girls' Generation", "SHINee", "EXO", "Red Velvet", "aespa", "RIIZE", "2PM", "GOT7", "DAY6", "TWICE", "Stray Kids", "ITZY", "NiziU", "NMIXX", "Xdinary Heroes", "NEXZ", "Miss A", "Wonder Girls", "BTS", "TOMORROW X TOGETHER", "ENHYPEN", "ILLIT", "LE SSERAFIM", "SEVENTEEN", "BOYNEXTDOOR", "New Jeans", "TWS", "NU'EST", "2NE1", "BIGBANG", "AKMU", "WINNER", "BLACKPINK", "TREASURE", "BABYMONSTER", "iKON", "INFINITE"];
+    let artists = ["NCT 127", "NCT DREAM", "NCT WISH", "NCT DOJAEJUNG", "WayV", "Brown Eyed Girls", "KARA", "F.T. Island", "4MINUTE", "BEAST", "CNBLUE", "SISTAR", "TEEN TOP", "Apink", "B1A4", "Boyfriend", "Block B", "B.A.P", "EXID", "BTOB", "VIXX", "AOA", "MAMAMOO", "GFRIEND", "MONSTA X", "OH MY GIRL", "N.Flying", "ONEWE", "ASTRO", "WJSN", "I.O.I", "SF9", "LOONA", "PENTAGON", "KARD", "Dreamcatcher", "HIGHLIGHT", "ONF", "Wanna One", "Weki Meki", "Golden Child", "THE BOYZ", "(G)I\u2010DLE", "ONEUS", "ATEEZ", "IZ*ONE", "AB6IX", "CIX", "Cravity", "Weeekly", "P1Harmony", "PURPLE KISS", "IVE", "Kep1er", "Xikers", "ZEROBASEONE", "TVXQ", "SUPER JUNIOR", "Girls' Generation", "SHINee", "EXO", "Red Velvet", "aespa", "RIIZE", "2PM", "GOT7", "DAY6", "TWICE", "Stray Kids", "ITZY", "NiziU", "NMIXX", "Xdinary Heroes", "NEXZ", "Miss A", "Wonder Girls", "BTS", "TOMORROW X TOGETHER", "ENHYPEN", "ILLIT", "LE SSERAFIM", "SEVENTEEN", "BOYNEXTDOOR", "New Jeans", "TWS", "NU'EST", "2NE1", "BIGBANG", "AKMU", "WINNER", "BLACKPINK", "TREASURE", "BABYMONSTER", "iKON", "INFINITE"];
 
     artists.sort();
 
@@ -1365,9 +1476,6 @@ const keys = Array.from(
 
 
 const trackBox = d3.select("#track");
-// const timetime = d3.select("#timetime");
-// var timetime = document.querySelector('#track')
-// let widthSvg = $(timetime).width();
 let widthSong = "100%";
 
 const baseNames = keys.reduce((acc, key) => {
@@ -1475,13 +1583,15 @@ function triggerOutro(){
         scrub: true,
         pin: true, 
         pinSpacing: false,
+        opacity : 1 ,
+        // markers: true,
         anticipatePin: 1         
       });
     });
 
     var timetime = document.querySelector('#track')
     let widthSvg = $(timetime).width();
-    // console.log(widthSvg);
+
     // call to draw chkchkboom
     drawChart(example_songs[0], widthSvg);
 
@@ -1546,4 +1656,112 @@ for (i = 0; i < acc.length; i++) {
   });
 }
 
+const genderCurves = document.querySelector("#genderCurves");
+const genderIntro = document.querySelector("#genderIntro");
+let boolGender = false;
 
+
+function genderCurve() {
+  d3.json("assets/data/full_data.json").then(data => {
+
+    var girl_data = data.filter(d => d.gender == "Girl Group");
+    var boy_data = data.filter(d => d.gender == "Boy Group");
+  
+    let girl_avg = parseInt(d3.mean(girl_data, d => d.duration_sec));
+    let boy_avg = parseInt(d3.mean(boy_data, d => d.duration_sec));
+  
+    let girltime = [];
+  
+    for (let year = 2007; year <= 2024; year++) {
+      let current_data = girl_data.filter(d => new Date(d.release_date).getFullYear() === year);
+      let current_avg = parseInt(d3.mean(current_data, d => d.duration_sec));
+      let current = {year, current_avg};
+      girltime.push(current);
+    }
+    
+    let boytime = [];
+  
+    for (let year = 2007; year <= 2024; year++) {
+      let current_data = boy_data.filter(d => new Date(d.release_date).getFullYear() === year);
+      let current_avg = parseInt(d3.mean(current_data, d => d.duration_sec));
+      let current = {year, current_avg};
+      boytime.push(current);
+    }
+  
+    const svg = d3.select("#scatter-plot")
+    .select("svg") 
+    .select("g"); 
+  
+    // Scales (same as data)
+    const x = d3.scaleTime()
+    .domain([2007, 2024])
+    .range([0, width]);
+  
+  
+    const y = d3.scaleLinear()
+      .domain([0, 400]).nice()
+      .range([height, 0]);
+  
+    const line = d3.line()
+      .curve(d3.curveCardinal.tension(0.2))
+      .x(d => x(d.year))  
+      .y(d => y(d.current_avg)); 
+  
+    let girlpath = svg.append("path")
+        .data([girltime])
+        .attr("class", "line")
+        .attr("class", "genderCurve")
+        .attr("z-index", 5)
+        .attr("d", line)
+        .attr("fill", "none")
+        .attr("stroke-width", 2)
+        .attr("stroke", "#f781bf");
+  
+    const girllength = girlpath.node().getTotalLength(); 
+    // Make the line appear wowza
+    girlpath.attr("stroke-dasharray", girllength + " " + girllength)
+        .attr("stroke-dashoffset", girllength)
+          .transition()
+          .ease(d3.easeLinear)
+          .attr("stroke-dashoffset", 0)
+          .duration(1200);
+  
+    let boypath = svg.append("path")
+        .data([boytime])
+        .attr("class", "line")
+        .attr("class", "genderCurve")
+        .attr("z-index", 5)
+        .attr("d", line)
+        .attr("fill", "none")
+        .attr("stroke-width", 2)
+        .attr("stroke", "#984ea3");
+  
+    const boylength = boypath.node().getTotalLength(); 
+    // Make the line appear wowza
+    boypath.attr("stroke-dasharray", boylength + " " + boylength)
+        .attr("stroke-dashoffset", boylength)
+          .transition()
+          .ease(d3.easeLinear)
+          .attr("stroke-dashoffset", 0)
+          .duration(1200);
+  
+    window.addEventListener('scroll', () => {
+      if (isElementInViewport(genderIntro) && boolGender) {
+        boolGender = false;
+        svg.selectAll(".genderCurve").remove();
+      }
+      if (isElementInViewport(exploretab) && boolGender) {
+        boolGender = false;
+        svg.selectAll(".genderCurve").remove();
+      }
+    });
+    
+  }).catch(error => console.error("Error loading data:", error));
+}
+
+window.addEventListener('scroll', () => {
+  if (isElementInViewport(genderCurves) && !boolGender) {
+    boolGender = true;
+    genderCurve();
+  }
+});

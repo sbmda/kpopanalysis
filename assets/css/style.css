@@ -546,14 +546,20 @@ option:disabled {
 
 /* Mobile fixes! */
 @media only screen and (max-width: 768px) {
+  
     main {
         max-width: 100%;
         margin-top: 100px;
     }
 
-    #group-graph {
+    #group-graph, #sameAgencychart, #agencyChart {
       transform: translateX(-50);
     }
+
+    #sameAgencychart, #agencyChart {
+      margin-left: -40px;
+    }
+    
 
     #chart-filter {
       display: block;
