@@ -1268,7 +1268,7 @@ function getAgencyData(selectedAgency) {
     let agency_2024 = data.filter(d => new Date(d.release_date).getFullYear() === 2024);
     let avg_2024 = parseInt(d3.mean(agency_2024, d => d.duration_sec));
     let minutes_2024 = Math.floor(avg_2024/60);
-    let seconds_2024 = avg_2014 % 60;
+    let seconds_2024 = avg_2024 % 60;
 
     let diff_2007 = parseInt(Math.abs(avg_2024 - avg_2007));
     let diff_2014 = parseInt(Math.abs(avg_2024 - avg_2014));
