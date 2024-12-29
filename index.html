@@ -214,11 +214,6 @@
                             <option value="hybe">HYBE</option>
                         </select>
                     </div>
-                    <!-- <div class="selector">
-                        <select id="group-filter" name="group">
-                           <option disabled selected>Choose...</option>
-                        </select>
-                     </div> -->
                   </div>
                 </div>
                 <div id="overallAnalysis">
@@ -245,6 +240,16 @@
                     <div class="text-box">
                         <p>The average song length that year was <strong>3 minutes and 36 seconds</strong>; average song duration has suffered a 15% decrease since then. Interestingly enough, 2014 is the last year analyzed that had seen an increase in song duration from the previous year; all following years have seen a decrease since. </p>
                     </div></div>
+                    <div class="section-box">
+                     <div id="genderIntro"></div>
+                     <div class="text-box">
+                        <p>We can also observe a slight difference between <span style="color: #984ea3; font-weight: 600;">boy groups</span> and <span style="color: #f781bf; font-weight: 600;">girl groups</span>; overall, only <strong>three seconds</strong> separate average song durations between boy groups and girl groups within the entire dataset. Boy group songs tend to be generally longer, but the difference between the two has evolved over time.</p>
+                     </div></div>
+                     <div class="section-box">
+                        <div id="genderCurves"></div>
+                     <div class="text-box">
+                        <p><span style="color: #f781bf; font-weight: 600;">Girl groups</span> songs were about <strong>3 minutes and 47 seconds</strong> long in 2007, while <span style="color: #984ea3; font-weight: 600;">boy groups</span> lasted a little longer at <strong>3 minutes and 55 seconds</strong>. In 2014, boy groups tracks were 8 seconds longer than their girl group counterparts, at <strong>3 minutes and 38 seconds</strong>. This year, both have seen their track length plummet; girl groups were three seconds behind boy groups at <strong>3 minutes and one second</strong> on average.</p>
+                     </div></div>
                     <div class="section-box">
                         <div id="exploretab"></div>
                         <div class="text-box">
@@ -311,14 +316,14 @@
                         </div>
                         <div id="groupyearcharts" class="chart-section first"></div>
                         <div class="text-section" id="missingdata">
-                           <h4 class="accordion first">Why is there data missing in the graph?
+                           <h4 class="accordion first">Notice there’s data missing? 
                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16" style="text-align: center; margin-left: 5px; transform: translateY(3px)">
                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
                                  </svg>
                            </h4>
                                <div class="panel">
-                                   <p id="">Notice there’s data missing in a year you <em>know</em> a group has released music? There are various reasons for this; duplicates were deleted during data processing, which leads some years to have no data if tracks were to appear in previous or later releases. There might have also been issues during data fetching, and thus, the data is simply missing; see <a href="#methodology">methodology</a> for details.</p>                            
+                                   <p id="">Is there data missing in the graph in a year you <em>know</em> a group has released music? There are various reasons for this; duplicates were deleted during data processing, which leads some years to have no data if tracks were to appear in previous or later releases. There might have also been issues during data fetching, and thus, the data is simply missing; see <a href="#methodology">methodology</a> for details.</p>                            
                            </div>
                        </div>
                    </div>
@@ -327,6 +332,9 @@
                         <div class="text-section">
                             <p><strong><span class="group-name"></span></strong> is part of <strong><span class="agency-name"></span></strong>, one of the so-called “Big Four” entertainment companies in South Korea. SM Entertainment, JYP Entertainment and YG Entertainment long dominated the industry as the “Big Three”, before HYBE (previously BigHit Entertainment) took over the market, riding on BTS’s gigantic worldwide success. Their important number of artists and songs, as well as their overall market success, makes the same kind of analysis possible within the same agency; so how does <strong><span class="group-name"></span></strong> compare to other artists in <strong><span class="agency-name"></span></strong>?</p>
                             <p>The average song duration at <strong><span class="agency-name"></span></strong> is of <strong><span id="agency_minutes"></span> minutes and <span id="agency_seconds"></span> seconds</strong>. That makes <strong><span class="group-name"></span></strong>’s tracks generally <span id="group_indicator"></span> the rest of its agency’s songs. This year, songs by <strong><span class="agency-name"></span></strong> artists were about <strong><span id="minutes_2024"></span> minutes and <span id="seconds_2024"></span> seconds</strong> long. <span id="sentence_2007">Between 2007 and 2024, <strong><span class="agency-name"></span></strong> saw a change of <span id="diff_2007"></span> seconds in song duration; average song length in 2007 was <strong><span id="minutes_2007"></span> minutes and <span id="seconds_2007"></span> seconds</strong>. </span>In 2014, songs were on average about <strong><span id="minutes_2014"></span> minutes and <span id="seconds_2014"></span> seconds</strong>, so a difference of about <span id="diff_2014"></span> seconds compared to 2024.</p>
+                        </div>
+                        <div id="sameAgencychart" class="chart-section first"></div>
+                        <div class="text-section">
                             <p>At 2 minutes and 52 seconds, <strong>HYBE</strong> has the shortest average song duration in 2024 amongst the Big Four companies; <strong>SM Entertainment</strong> has the longest, at 3 minutes and 10 seconds. </p>
                         </div>
                         <div class="selector">
@@ -350,7 +358,10 @@
                         <div id="scrollAgency"></div>
                         <div class="text-section">
                             <p>The average song duration at <strong><span class="agency-name"></span></strong> is of <strong><span id="agcy_minutes"></span> minutes and <span id="agcy_seconds"></span> seconds</strong>. This year, songs by <strong><span class="agency-name"></span></strong> artists were about <strong><span id="mnts_2024"></span> minutes and <span id="scds_2024"></span> seconds</strong> long. <span id="stnc_2007">Between 2007 and 2024, <strong><span class="agency-name"></span></strong> saw a change of <span id="diff2007"></span> seconds in song duration; average song length in 2007 was <strong><span id="mnts_2007"></span> minutes and <span id="scds_2007"></span> seconds</strong>. </span>In 2014, songs were on average about <strong><span id="mnts_2014"></span> minutes and <span id="scds_2014"></span> seconds</strong>, so a difference of about <span id="diff2014"></span> seconds compared to 2024.</p>
-                            <p>At 2 minutes and 52 seconds, <strong>HYBE</strong> has the shortest average song duration in 2024 amongst the Big Four companies; <strong>SM Entertainment</strong> has the longest, at 3 minutes and 10 seconds. </p>
+                        </div>
+                        <div id="agencyChart" class="chart-section first"></div>
+                        <div class="text-section">
+                           <p>At 2 minutes and 52 seconds, <strong>HYBE</strong> has the shortest average song duration in 2024 amongst the Big Four companies; <strong>SM Entertainment</strong> has the longest, at 3 minutes and 10 seconds. </p>
                         </div>
                         <div class="selector">
                             <button class="resume-group">Choose another group</button>
@@ -471,7 +482,7 @@
             </div>
         </main>
         <footer>
-            <p>Created with care by Sarah. <a href="mailto:sarah.b7@outlook.com">Click here</a> if you want to get in touch. | Last updated: December 27th, 2024.</p>
+            <p>Created with care by Sarah. <a href="mailto:sarah.b7@outlook.com">Click here</a> if you want to get in touch. | Last updated: December 26th, 2024.</p>
         </footer>     
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script type="module" src="assets/js/script.js"></script>
