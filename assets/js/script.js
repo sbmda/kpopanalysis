@@ -1569,13 +1569,20 @@ const supershy = document.querySelector('#supershy');
 const chkchkboom = document.querySelector('#chkchkboom');
 const tempo = document.querySelector('#tempo');
 
+let songtrigger;
+
 function triggerOutro(){
 
   $("#outro").fadeIn();
+
     $(document).ready(function() {
-      const $chartContainer = $("#player02");
-      const $endTrack = $("#end-track");
-      ScrollTrigger.create({
+      var $chartContainer = $("#player02");
+      var $endTrack = $("#end-track");
+      if (songtrigger) {
+        songtrigger.kill();
+      }
+      
+      songtrigger = ScrollTrigger.create({
         trigger: $chartContainer[0],
         start: "center center",
         endTrigger: $endTrack[0],
@@ -1583,10 +1590,15 @@ function triggerOutro(){
         scrub: true,
         pin: true, 
         pinSpacing: false,
-        opacity : 1 ,
+        opacity : 1,
         // markers: true,
+        invalidateOnRefresh: true,
+        // pinReparent: true,
         anticipatePin: 1         
       });
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 100);
     });
 
     var timetime = document.querySelector('#track')
